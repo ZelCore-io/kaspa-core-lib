@@ -1,4 +1,4 @@
-declare module '@kaspa/core-lib' {
+declare module '@onekeyfe/core-lib' {
 
 	function initRuntime(): Promise;
 	function setDebugLevel(level:number):void;
@@ -91,7 +91,7 @@ declare module '@kaspa/core-lib' {
 	}
 
 	export namespace Transaction {
-		
+
 		static class sighash {
 			static sign(transaction, privateKey, sighashType, inputIndex, subscript, satoshisBN, flags, signingMethod);
 			static sighash(transaction, sighashType, inputNumber, subscript, satoshisBN, flags): Buffer;

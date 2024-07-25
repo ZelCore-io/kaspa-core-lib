@@ -1,12 +1,6 @@
 'use strict';
 
-
-const secp256k1 = require('secp256k1-wasm');
-const blake2b = require('blake2b-wasm');
-
 var kaspacore = module.exports;
-
-kaspacore.secp256k1 = secp256k1;
 
 // module information
 kaspacore.version = 'v' + require('./package.json').version;
@@ -21,41 +15,6 @@ kaspacore.versionGuard = function(version) {
 kaspacore.versionGuard(global._kaspacoreLibVersion);
 global._kaspacoreLibVersion = kaspacore.version;
 
-
-const wasmModulesLoadStatus = new Map();
-kaspacore.wasmModulesLoadStatus = wasmModulesLoadStatus;
-wasmModulesLoadStatus.set("blake2b", false);
-wasmModulesLoadStatus.set("secp256k1", false);
-
-const setWasmLoadStatus = (mod, loaded) => {
-	//console.log("setWasmLoadStatus:", mod, loaded)
-	wasmModulesLoadStatus.set(mod, loaded);
-	let allLoaded = true;
-	wasmModulesLoadStatus.forEach((loaded, mod) => {
-		//console.log("wasmModulesLoadStatus:", mod, loaded)
-		if (!loaded)
-			allLoaded = false;
-	})
-
-	if (allLoaded)
-		kaspacore.ready();
-}
-
-
-blake2b.ready(() => {
-	setWasmLoadStatus("blake2b", true);
-})
-
-secp256k1.onRuntimeInitialized = () => {
-	//console.log("onRuntimeInitialized")
-	setTimeout(() => {
-		setWasmLoadStatus("secp256k1", true);
-	}, 1);
-}
-
-secp256k1.onAbort = (error) => {
-	console.log("secp256k1:onAbort:", error)
-}
 const deferred = ()=>{
 	let methods = {};
 	let promise = new Promise((resolve, reject)=>{
