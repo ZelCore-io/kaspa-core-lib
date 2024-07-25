@@ -1,4 +1,4 @@
-declare module '@onekeyfe/core-lib' {
+declare module '@onekeyfe/kaspacore-lib' {
 
 	function initRuntime(): Promise;
 	function setDebugLevel(level:number):void;
