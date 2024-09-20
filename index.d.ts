@@ -1,4 +1,4 @@
-declare module '@onekeyfe/kaspacore-lib' {
+declare module '@onekeyfe/kaspa-core-lib' {
 
 	function initRuntime(): Promise;
 	function setDebugLevel(level:number):void;
@@ -93,7 +93,7 @@ declare module '@onekeyfe/kaspacore-lib' {
 	export namespace Transaction {
 
 		static class sighash {
-			static sign(transaction, privateKey, sighashType, inputIndex, subscript, satoshisBN, flags, signingMethod);
+			// static sign(transaction, privateKey, sighashType, inputIndex, subscript, satoshisBN, flags, signingMethod);
 			static sighash(transaction, sighashType, inputNumber, subscript, satoshisBN, flags): Buffer;
 		}
 		class UnspentOutput {
@@ -103,7 +103,7 @@ declare module '@onekeyfe/kaspacore-lib' {
 			readonly txId: string;
 			readonly outputIndex: number;
 			readonly script: Script;
-			readonly satoshis: number;
+			readonly satoshis: number | string;
 
 			constructor(data: object);
 
@@ -114,7 +114,8 @@ declare module '@onekeyfe/kaspacore-lib' {
 
 		class Output {
 			readonly script: Script;
-			readonly satoshis: number;
+			readonly satoshis: number | string;
+			readonly satoshisBN: crypto.BN;
 
 			constructor(data: object);
 
@@ -149,12 +150,12 @@ declare module '@onekeyfe/kaspacore-lib' {
 		constructor(serialized ? : any);
 
 		from(utxos: Transaction.UnspentOutput[]): this;
-		to(address: Address[] | Address | string, amount: number): this;
+		to(address: Address[] | Address | string, amount: number | string): this;
 		change(address: Address | string): this;
 		fee(amount: number): this;
 		setVersion(version: number): this;
 		feePerKb(amount: number): this;
-		sign(privateKey: PrivateKey|PrivateKey[] | string|string[], sigtype:number, signingMethod:string|undefined): this;
+		// sign(privateKey: PrivateKey|PrivateKey[] | string|string[], sigtype:number, signingMethod:string|undefined): this;
 		applySignature(sig: crypto.Signature): this;
 		addInput(input: Transaction.Input): this;
 		addOutput(output: Transaction.Output): this;
@@ -163,6 +164,8 @@ declare module '@onekeyfe/kaspacore-lib' {
 		lockUntilBlockHeight(height: number): this;
 
 		getMassAndSize():{txSize:number, mass:number};
+		calcStorageMass():number;
+		calcComputeMass():number;
 
 		hasWitnesses(): boolean;
 		getFee(): number;
