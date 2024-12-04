@@ -1,8 +1,12 @@
 {
-  "name": "@onekeyfe/kaspa-core-lib",
-  "version": "1.0.1",
+  "name": "@runonflux/kaspa-core-lib",
+  "version": "1.0.0",
   "main": "index.js",
   "authors": [
+    {
+      "name": "Tadeas Kmenta",
+      "email": "tadeas@runonflux.io"
+    },
     {
       "name": "Onekey",
       "email": "dev@onekey.so"
@@ -30,7 +34,7 @@
     "lodash": "^4.17.20",
     "url": "*"
   },
-  "description": "JavaScript Kaspa library.",
+  "description": "JavaScript Kaspa library without Wasm, based on noble/curves.",
   "___devDependencies": {
     "base-x": "=3.0.4",
     "bitcore-build": "^8.23.1",
